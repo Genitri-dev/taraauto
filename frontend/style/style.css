@@ -1,0 +1,98 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+/* login */
+#login {
+    background: linear-gradient(0deg, rgba(0, 47, 255, 0.26), rgba(0, 47, 255, 0.26)), #000957;
+}
+#wrapper_out_login{
+    background-color: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    width: 1000px;
+    border-radius: 10px;
+}
+#c_name {
+    color: #EBE645;
+}
+#c_name span{
+    color: #000957;
+}
+#g_mobil{
+    width: 500px;
+    height: 500px;
+    position: relative;
+    top: -1em;
+    left: -2.5em;
+    background-image: url(../style/img/gambarmobil.jpg);
+    border-radius:9px 0px 0px 9px ;
+}
+#form_login{
+    position: relative;
+    text-align: center;
+    top: -8.1em;
+    right: -1.3em;
+}
+#wrapper_out_login li{
+    display: inline-block;
+}
+#userinput{
+    position: relative;
+    padding: 0;
+    margin-top: 25px;
+    
+}
+#username::placeholder{
+    font-size: large;
+    font-weight: bold;
+    position: absolute;
+}
+
+#username{
+    border:none ;
+    border-bottom: 2px solid #EBE645;
+    height:50px;
+    padding-left: 50px;
+    font-size: 1.2em;
+}
+#icons{
+    position:absolute;
+    bottom: 17px;
+    padding-right: 10px;
+    left:5px;
+    width:25px;
+    height:25px;
+}
+#b_sumbit{
+    margin-top: 2em;
+    padding: 10px;
+    font-size: x-large;
+    font-weight: bold;
+    background-color: #344CB7;
+    color: white    ;
+    border: none;
+    border-radius: 5px;
+}
+/* index */
+a {
+    text-decoration: none;
+    color: white;
+}
+#sidebar{
+    background-color:#344CB7;
+    width: 20%;
+    margin-left:2em ;
+    text-align: center;
+}
+#c_name_index{
+    color: #EBE645;
+    /* background-color: #344CB7; */
+}
+#c_name_index span{
+    color: #000957;
+}
