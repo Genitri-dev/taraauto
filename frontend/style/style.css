@@ -182,7 +182,44 @@ nav ol li {
     height: 41px;
     fill: #EBE645;
 }
+#table {
+    position: relative;
+    margin-left: 21.3em;
+    margin-top: -41.3em;
+    /* border: solid 1px; */
+    width: max-content;
+}
+#table td, #table th{
+    padding: 2.60em;
+}
 #table tr td img {
     height: 150px;
-    /* width: 250px; */
+}
+table,tr {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+#edit {
+    padding: 10px 1em 10px 1em;
+    background-color: #2AFF07;
+    color: #000957;
+    border-radius: 5px;
+}
+#hapus {
+    padding: 10px 1em 10px 1em;
+    margin-left: 10px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+}
+#paginations {
+    color: #000957;
+    margin-top: 1em;
+    margin-left: 64em;
+    font-size: x-large;
+}
+/* tambah */
+#conten_wrp_tambah {
+    position: relative;
+    margin: 5%;
 }

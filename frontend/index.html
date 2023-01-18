@@ -42,34 +42,63 @@
                 <div id="l_out_wrp">
                     <a href="logout.php"><h3>Log out</h3></a>
                 </div>
+                </div>
             </div>
             <div id="table">
-                <table id="table">
+                <table>
                     <tr>
-                        <th>
-                            No
-                        </th>
-                        <th>
-                            Id
-                        </th>
-                        <th>
-                            Foto
-                        </th>
-                        <th>
-                            Nama
-                        </th>
-                        <th>
-                            Stok
-                        </th>
-                        <th>
-                            Harga
-                        </th>
-                        <th>
-                            Update Terakhir
-                        </th>
-                        <th>
-
-                        </th>
+                        <div id="tb_head">
+                            <th>
+                                No
+                            </th>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Foto
+                            </th>
+                            <th>
+                                Nama
+                            </th>
+                            <th>
+                                Stok
+                            </th>
+                            <th>
+                                Harga
+                            </th>
+                            <th colspan="2">
+                                Update Terakhir
+                            </th>
+                        </div>
+                    </tr>
+                    <tr>
+                        <div id="tb_data">
+                            <td>
+                                1
+                        </td>
+                        <td>
+                            001
+                        </td>
+                        <td>
+                            <img src="../backend/db/img/olimobil.jpg" alt="olimobil">
+                        </td>
+                        <td>
+                            Oli Mobil Castrol
+                        </td>
+                        <td>
+                            789
+                        </td>
+                        <td>
+                            180.000
+                        </td>
+                        <td>
+                            Admin
+                        </td>
+                        <td>
+                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="hapus" href="hapus.html">Hapus</a>
+                        </td>
+                        </div>
                     </tr>
                     <tr>
                         <td>
@@ -94,13 +123,22 @@
                             Admin
                         </td>
                         <td>
-                            <a href="edit.html">Edit</a>
-                            <a href="hapus.html">Hapus</a>
+                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="hapus" href="hapus.html">Hapus</a>
                         </td>
                     </tr>
                 </table>
             </div>
-        </div>
+            <div id="paginations">
+                <p>
+                    <a href="#"> < </a>
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">...</a>
+                    <a href="#">5</a>
+                    <a href="#"> > </a>
+                </p>
+            </div>
     </div>
 </body>
 </html>
