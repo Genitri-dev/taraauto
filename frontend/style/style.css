@@ -3,6 +3,9 @@ body{
     padding: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
+a {
+    text-decoration: none;
+}
 /* login */
 #login {
     background: linear-gradient(0deg, rgba(0, 47, 255, 0.26), rgba(0, 47, 255, 0.26)), #000957;
@@ -79,15 +82,15 @@ body{
     border-radius: 5px;
 }
 /* index */
-a {
-    text-decoration: none;
-    color: white;
+#conten_wrp{
+    position: relative;
+    margin:-1.5% 5% 0% 5%;
 }
 #sidebar{
     background-color:#000957;
     width : 35vh;
     height: 80vh;
-    margin: 10vh 0vh 10vh 5vh ;
+    /* margin: 10vh 0vh 10vh 5vh ; */
     text-align: center;
     border-radius: 10px;
 }
@@ -122,4 +125,64 @@ a {
 #l_out_wrp {
     top: 10em;
     position: relative;
+}
+#prd_wrp a, #usr_wrp a, #l_out_wrp a {
+    color: white;
+}
+nav{
+    text-align: center;
+    position: relative;
+    top: 6.4em;
+}
+nav ol li {
+    list-style: none;
+    display: inline-block;
+}
+#tambah {
+    position: relative;
+    left: -10em;
+}
+#tambah a h2 {
+    background-color: #000957;
+    color: #EBE645;
+    font-weight: bold;
+    font-size: large;
+    width: fit-content;
+    position: relative;
+    top: -2px;
+    /* padding: 15px; */
+    padding: 10px 20px 21px 20px;
+    border-radius: 10px;
+}
+#tambah a span {
+    font-size: x-large;
+}
+#src_form {
+    position: relative;
+    right:-31em ;
+}
+#src_input {
+    padding: 20px 10px 20px 10px;
+    background-color: #000957;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: large;
+}
+#src_button {
+    position: relative;
+    top: 11px;
+    left: -4.3em;
+    background-color: #000957;
+    border-radius: 10px;
+    border: none;
+}
+#src_button svg{
+    width: 41px;
+    height: 41px;
+    fill: #EBE645;
+}
+#table tr td img {
+    height: 150px;
+    /* width: 250px; */
 }
