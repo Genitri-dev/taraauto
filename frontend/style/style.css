@@ -63,6 +63,13 @@ a {
     padding-left: 50px;
     font-size: 1.2em;
 }
+#password {
+    border:none ;
+    border-bottom: 2px solid #EBE645;
+    height:50px;
+    padding-left: 50px;
+    font-size: 1.2em;
+}
 #icons{
     position:absolute;
     bottom: 17px;
@@ -81,7 +88,7 @@ a {
     border: none;
     border-radius: 5px;
 }
-/* index */
+/* index & user */
 #conten_wrp{
     position: relative;
     margin:-1.5% 5% 0% 5%;
@@ -198,6 +205,7 @@ nav ol li {
 table,tr {
     border: 1px solid black;
     border-collapse: collapse;
+    width: 1306px;
 }
 #edit {
     padding: 10px 1em 10px 1em;
@@ -218,8 +226,65 @@ table,tr {
     margin-left: 64em;
     font-size: x-large;
 }
+#paginations_user{
+    color: #000957;
+    position: relative;
+    margin-top: 1 em;
+    margin-left: 50em;
+    font-size: x-large;   
+}
 /* tambah */
 #conten_wrp_tambah {
     position: relative;
     margin: 5%;
 }
+#content {
+    position: relative;
+    right: -50em ;
+    top: -19.84em;
+    width: 250px;
+    background-color: #000957;
+    padding: 10em;
+    border-radius: 2em;
+}
+#form_tambah h1 {
+    color: #EBE645;
+    text-align: center;
+}
+#form_tambah {
+    margin:0% -50%;
+}
+#namaproduk,#hargaproduk,#stokproduk{
+    margin-top: 1em;
+    padding: 1em;
+    border: none;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    font-size: 1.2em;
+}
+#namaproduk::placeholder,#hargaproduk::placeholder,#stokproduk::placeholder{
+    font-size: x-large;
+    color: black;
+}
+#userinput_tambah_g{
+    margin: 1em 35%;
+    text-align: center;
+    padding: 10px 2em ;
+    width: max-content;
+    border: none;
+    border-radius: 3px;
+    background-color: white;
+    color: black;
+    font-size: 1em;
+  }
+
+  #gambarproduk{
+    display: none;
+  }
+  #l_gamarp{
+    cursor:pointer;
+  }
+  #addphoto{
+    color:green;
+  }
