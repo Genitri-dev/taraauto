@@ -2,6 +2,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
+    overflow: hidden;
 }
 a {
     text-decoration: none;
@@ -149,7 +150,7 @@ nav ol li {
     position: relative;
     left: -10em;
 }
-#tambah a h2 {
+#tambah a button h2 {
     background-color: #000957;
     color: #EBE645;
     font-weight: bold;
@@ -160,6 +161,10 @@ nav ol li {
     /* padding: 15px; */
     padding: 10px 20px 21px 20px;
     border-radius: 10px;
+}
+#tambah button {
+    border: none;
+    background-color: transparent;
 }
 #tambah a span {
     font-size: x-large;
@@ -207,6 +212,7 @@ table,tr {
     border-collapse: collapse;
     width: 1306px;
 }
+
 #edit {
     padding: 10px 1em 10px 1em;
     background-color: #2AFF07;
@@ -233,26 +239,47 @@ table,tr {
     margin-left: 50em;
     font-size: x-large;   
 }
-/* tambah */
+#btn_benar{
+    padding: 1em;
+    background-color: #2AFF07;
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    margin-left: 5em;
+}
+#btn_salah{
+    padding: 1em;
+    background-color: red;
+    font-size: large;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1em;
+    margin-left: 8em;
+}
+
+/* pop up tambah */
+
 #conten_wrp_tambah {
     position: relative;
     margin: 5%;
 }
-#content {
+#wrp_tbh{
     position: relative;
-    right: -50em ;
-    top: -19.84em;
+    top: -33.55em;
+    right: 50em;
+    left: 30em;
+}
+#content:not(:target) {
+    position: relative;
     width: 250px;
     background-color: #000957;
-    padding: 10em;
     border-radius: 2em;
+
+    display:none
 }
 #form_tambah h1 {
     color: #EBE645;
     text-align: center;
-}
-#form_tambah {
-    margin:0% -50%;
 }
 #namaproduk,#hargaproduk,#stokproduk{
     margin-top: 1em;
@@ -268,7 +295,7 @@ table,tr {
     color: black;
 }
 #userinput_tambah_g{
-    margin: 1em 35%;
+    margin: 1em 27.5%;
     text-align: center;
     padding: 10px 2em ;
     width: max-content;
@@ -278,7 +305,6 @@ table,tr {
     color: black;
     font-size: 1em;
   }
-
   #gambarproduk{
     display: none;
   }
@@ -288,3 +314,18 @@ table,tr {
   #addphoto{
     color:green;
   }
+#content:target {
+    display: block;
+    background-color: #000957;
+    width: max-content;
+    padding: 4em 15em;
+    border-radius: 2em;
+    position: absolute;
+    margin-top: -11em;
+}
+#content_in:target{
+    display: none;
+}
+
+
+/* isoleated */
