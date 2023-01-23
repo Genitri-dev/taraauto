@@ -17,7 +17,7 @@
             <nav>
                  <ol>
                     <li id="tambah">
-                        <a href="tambah.html"> <h2><span>+</span>Tambah</h2></a>
+                        <a href="#wrp_ad_usr"><button> <h2><span>+</span>Tambah</h2> </button></a>
                     </li>
                     <li>
                         <form  id="src_form" action="" method="post">
@@ -89,7 +89,7 @@
                             Admin
                         </td>
                         <td>
-                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
                             <a  id="hapus" href="hapus.html">Hapus</a>
                         </td>
                         </div>
@@ -115,7 +115,7 @@
                             Admin
                         </td>
                         <td>
-                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
                             <a  id="hapus" href="hapus.html">Hapus</a>
                         </td>
                         </div>
@@ -141,7 +141,7 @@
                             Admin
                         </td>
                         <td>
-                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
                             <a  id="hapus" href="hapus.html">Hapus</a>
                         </td>
                         </div>
@@ -167,7 +167,7 @@
                             Admin
                         </td>
                         <td>
-                            <a  id="edit" href="edit.html">Edit</a>
+                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
                             <a  id="hapus" href="hapus.html">Hapus</a>
                         </td>
                         </div>
@@ -183,6 +183,61 @@
                     <a href="#"> > </a>
                 </p>
             </div>
-    </div>
+            </div>
+            <div id="wrp_ad_usr">
+                <div id="content_o">
+                    <div id="content_ine">
+                        <form action="post" id="form_tambah">
+                            <h1>Tambah User</h1>
+                        <div id="userinput_tambah">
+                            <input type="text" id="namauser" name="namauser" placeholder="Nama User">
+                        </div>
+                        <div id="userinput_tambah">
+                            <input type="text" id="username_ad_usr" name="username" placeholder="User Name">
+                        </div>
+                        <div id="userinput_tambah">
+                            <input type="number" id="nohandphone" name="nohandphone" placeholder="No HP">
+                        </div>
+                        <div id="userinput_tambah">
+                            <input type="password" id="password_ad_usr" name="namaproduk" placeholder="Password">
+                        </div>
+                        <div id="userinput_tambah">
+                            <input type="password" id="repassword_ad_usr" name="namaproduk" placeholder="Ulangi Password">
+                        </div>
+                        <div id="actions">
+                            <button type="submit" id="btn_benar" name="submit">Tambah User</button>
+                        </div>
+                        </form>
+                        <a href="#"><button id="btn_salah_e">Batal</button></a>
+                    </div>
+                </div>
+            </div>
+            <div id="conten_wrp_edit">
+                    <div id="wrp_ed_usr">
+                            <div id="content_o">
+                                <div id="content_ine">
+                                    <form action="post" id="form_tambah">
+                                        <h1>Edit User</h1>
+                                    <div id="userinput_tambah">
+                                        <input type="text" id="username_ad_usr" name="username" placeholder="User Name">
+                                    </div>
+                                    <div id="userinput_tambah">
+                                        <input type="number" id="nohandphone" name="nohandphone" placeholder="No HP">
+                                    </div>
+                                    <div id="userinput_tambah">
+                                        <input type="password" id="password_ad_usr" name="namaproduk" placeholder="Password">
+                                    </div>
+                                    <div id="userinput_tambah">
+                                        <input type="password" id="repassword_ad_usr" name="namaproduk" placeholder="Ulangi Password">
+                                    </div>
+                                    <div id="actions">
+                                        <button type="submit" id="btn_benar" name="submit">Tambah User</button>
+                                    </div>
+                                    </form>
+                                    <a href="#"><button id="btn_salah_e">Batal</button></a>
+                                </div>
+                            </div>
+                    </div>
+            </div>
 </body>
 </html>
