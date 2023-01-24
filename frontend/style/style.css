@@ -337,7 +337,7 @@ table,tr {
     text-align: center;
     background-color: #000957;
     width: 500px;
-    height: max-content ;
+    height: 850px;
     padding: 1em;
     border-radius: 20px;
     display: none;
@@ -384,7 +384,7 @@ table,tr {
     position: absolute;
     left: 30%;
     right: 50%;
-    top: 5.5%;
+    top: 3%;
 }
 #wrp_edit:target  {
     position: absolute;
