@@ -2,7 +2,7 @@ body{
     margin: 0;
     padding: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    overflow: hidden;
+    height: 100%;
 }
 a {
     text-decoration: none;
@@ -163,6 +163,9 @@ nav ol li {
     display: inline-block;
 }
 nav ol li #c_name_wrp{
+    display: none;
+}
+#close{
     display: none;
 }
 #menu_bar{
@@ -352,12 +355,51 @@ table,tr {
     background-color: rgb(0, 0, 0,.5);
 }
 @media screen and (max-width: 700px) {
+    #conten_wrp{
+        overflow-x:hidden ;
+        width: 100vw;
+        margin: 0;
+    }
     #sidebar{
         display:none ;
     }
-    #conten_wrp{
-        overflow: hidden;
-        margin: 0;
+    #conten_wrp:target #sidebar{
+        display:block;
+        border-radius: 0;
+        width: 100%;
+    }
+    #conten_wrp:target #menu_bar {
+        display: none;
+    }
+    #conten_wrp:target #close {
+        display: block;
+        margin-right: -10em;
+        margin-top: -5em;
+    }
+    #conten_wrp:target #sidebar #c_name_index {
+        display: none;
+    }
+    #conten_wrp:target {
+        overflow-y: hidden;
+    }
+    #conten_wrp_user:target #sidebar{
+        display:block;
+        border-radius: 0;
+        width: 100%;
+    }
+    #conten_wrp_user:target #menu_bar {
+        display: none;
+    }
+    #conten_wrp_user:target #close {
+        display: block;
+        margin-right: -10em;
+        margin-top: -5em;
+    }
+    #conten_wrp_user:target #sidebar #c_name_index {
+        display: none;
+    }
+    #conten_wrp_user:target {
+        overflow-y: hidden;
     }
     #tambah {
         margin-left: 33%;
@@ -366,6 +408,9 @@ table,tr {
     nav{
         margin-top: -2em;
         margin-left:  -21px;
+    }
+    #close{
+        display: none;
     }
     #src_form{
         position: relative;
@@ -384,13 +429,13 @@ table,tr {
     #menu_bar{
         display: block;
         position: absolute;
-        margin-top:-5.6em ;
-        margin-left: 79%;
+        margin-top:-5.3em ;
+        margin-left: -0.2em;
         text-align: center;
     }
     #paginations{
         position: absolute;
-         
+        margin-left: 1%;
     }
     #table{
         position: relative;
@@ -398,10 +443,21 @@ table,tr {
         left: -23em;
     }
     #tbl_w{
-        max-width: 100vw;
         overflow-x: auto;
         height: 700px;
         width: 100%;
+    }
+    #user{
+        overflow: scroll;
+    }
+    #wrp_tbh:target #content{
+        left: 17.5%;
+        right: 50%;
+        top: 15%;
+    }
+    #wrp_edit:target #content_o #content_ine{
+        position: absolute;
+        margin: 5em 0 0 -5.2em ;
     }
   }
 
