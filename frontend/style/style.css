@@ -1,8 +1,10 @@
+
 body{
     margin: 0;
     padding: 0;
     font-family: 'Plus Jakarta Sans', sans-serif;
     height: 100%;
+    overflow-x: hidden;
 }
 a {
     text-decoration: none;
@@ -196,7 +198,6 @@ nav ol li #c_name_wrp{
 }
 #src_form {
     position: relative;
-    
 }
 #src_input {
     padding: 20px 10px 20px 10px;
@@ -382,25 +383,6 @@ table,tr {
     #conten_wrp:target {
         overflow-y: hidden;
     }
-    #conten_wrp_user:target #sidebar{
-        display:block;
-        border-radius: 0;
-        width: 100%;
-    }
-    #conten_wrp_user:target #menu_bar {
-        display: none;
-    }
-    #conten_wrp_user:target #close {
-        display: block;
-        margin-right: -10em;
-        margin-top: -5em;
-    }
-    #conten_wrp_user:target #sidebar #c_name_index {
-        display: none;
-    }
-    #conten_wrp_user:target {
-        overflow-y: hidden;
-    }
     #tambah {
         margin-left: 33%;
         float:left 
@@ -442,6 +424,11 @@ table,tr {
         top: 43em;
         left: -23em;
     }
+    #tbl_w_usr{
+        overflow-x: auto;
+        height: 600px;
+        width: 100%;
+    }
     #tbl_w{
         overflow-x: auto;
         height: 700px;
@@ -449,6 +436,20 @@ table,tr {
     }
     #user{
         overflow: scroll;
+    }
+    #paginations_user{
+        margin-left: 10px;
+    }
+    #wrp_ad_usr:target{
+        height: 100vh;
+    }
+    #wrp_ad_usr:target #content_ine{
+        margin: -1em -5.5em ;
+        overflow: hidden;
+    }
+    #wrp_edit:target #content_o #content_ine{
+        position: absolute;
+        margin: 5em 0 0 -5.2em ;
     }
     #wrp_tbh:target #content{
         left: 17.5%;
@@ -458,7 +459,11 @@ table,tr {
     #wrp_edit:target #content_o #content_ine{
         position: absolute;
         margin: 5em 0 0 -5.2em ;
+        height: 100vh;
     }
+    #conten_wrp_edit:target #content_o #content_ine {
+        margin-left: -5em;
+   }
   }
 
 /* edit produk */
@@ -467,11 +472,12 @@ table,tr {
     text-align: center;
     background-color: #000957;
     width: 500px;
-    height: 850px;
+    height: fit-content;
     padding: 1em;
     border-radius: 20px;
     display: none;
 }
+
 #userinput_tambah_g_e{
     margin: 1em 34%;
     text-align: center;
@@ -523,7 +529,7 @@ table,tr {
     right: -10em;
     left: -10em;
     width: 150%;
-    height: 150%;
+    height: 160%;
     background-color: rgb(0, 0, 0,.5);
 }
 
