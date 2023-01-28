@@ -80,7 +80,7 @@ a {
     width:25px;
     height:25px;
 }
-#b_sumbit{
+button#b_login{
     margin-top: 2em;
     padding: 10px;
     font-size: x-large;
