@@ -1,11 +1,11 @@
 <?php
     
     #sesion
-    #session_start();
+    session_start();
         #chek if user already login or not 
-      # if(isset($_SESSION["login"])){
-            #header("Locations: index.php");
-      #  }
+       if(isset($_SESSION["login"])){
+            header("Locations: index.php");
+       }
     #functions 
     require '../backend/functions.php';
     #function login 

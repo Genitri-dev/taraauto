@@ -1,7 +1,32 @@
-<?php
-    
+<?php   
+    session_start();
+     #chek if user already login or not 
+    if( !isset($_SESSION["login"])  && $_SESSION["login"] == false){
+         header("Locations:  index.php");
+        exit();
+    }
     require "../backend/functions.php";
-
+    #fungsi untuk menambahkan produk 
+    if( isset($_POST["tabah_prd"]) ){
+        //apakah data berhasil di masukan atau tidak
+        if( tambah($_POST) > 0){
+            echo "
+                <script>
+                    alert('Produk Baru Berhasil Di Tambahkan');
+                    document.location.href = 'index.php';
+                </script>
+            ";
+        } else {
+            echo "
+                <script>
+                    alert('Produk  Gagal Di Tambahkan');
+                    document.location.href = 'index.php';
+                </script>
+            ";
+        }
+    }
+    #fungsi untuk menampilkan produk dari database
+    $produk = mysqli_query($conn,"SELECT * FROM produk ORDER BY namaproduk");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +84,7 @@
                     <a href="user.html"><h1>User</h1></a>
                 </div>
                 <div id="l_out_wrp">
-                    <a href="logout.php"><h3>Log out</h3></a>
+                    <a href="logout.php" onclick="return confirm('Apakah Akan Logout');"><h3>Log out</h3></a>
                 </div>
                 </div>
             </div>
@@ -71,7 +96,6 @@
                             <th>
                                 No
                             </th>
-
                             <th>
                                 Foto
                             </th>
@@ -89,56 +113,43 @@
                             </th>
                         </div>
                     </tr>
-                    <tr>
-                        <div id="tb_data">
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <img src="../backend/img/olimobil.jpg" alt="olimobil">
-                        </td>
-                        <td>
-                            Oli Mobil Castrol
-                        </td>
-                        <td>
-                            789
-                        </td>
-                        <td>
-                            180.000
-                        </td>
-                        <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a id="edit" href="#wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <td>
-                            1
-                        </td>
-                        <td>
-                            <img src="../backend/img/olimobil.jpg" alt="olimobil">
-                        </td>
-                        <td>
-                            Oli Mobil Castrol
-                        </td>
-                        <td>
-                            789
-                        </td>
-                        <td>
-                            180.000
-                        </td>
-                        <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a  id="edit" href="#wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
-                    </tr>
+                    <?php $i = 1; ?>
+                    <?php foreach( $produk as $row ) : ?>
+                        <tr>
+                            <div id="tb_data">
+                            <td style="display : none">
+                                <?= $row["produk_id"]; ?>
+                            </td>
+                            <td>
+                                <?= $i; ?> 
+                            </td>
+                            <td>
+                            <img src="img/<?= $row['gambarproduk']?>">
+                            </td>
+                            <td>
+                                 <?= $row["namaproduk"]; ?>
+                            </td>
+                            <td>
+                                  <?= $row["stokproduk"]; ?>
+                            </td>
+                            <td>
+                                  <?= $row["hargaproduk"]; ?>
+                            </td>
+                            <td>
+                                 Last Edit By <?= $row["nama"]; ?>
+                            </td>
+                            <td>
+                                <a id="edit" href="#wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg></a>
+                                <a  id="hapus" href="hapus.php?id=<?= $row['produk_id']?>" 
+                                    onclick="return confirm('Apakah Produk Akan Di Hapus');">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"/></svg>
+                                </a>
+
+                            </td>
+                            </div>
+                        </tr>
+                        <?php $i++; ?>
+	                <?php endforeach; ?>
                 </table>
             </div>
             </div>
@@ -156,28 +167,28 @@
             <div id="wrp_tbh">
                 <div id="content_out">
                     <div id="content">
-                            <form action="post" id="form_tambah">
+                            <form action="" method="post" id="form_tambah" enctype="multipart/form-data">
                                 <h1>Tambah Produk</h1>
                                 <div id="userinput_tambah_g">
-                                    <label id="l_gamarp" for="gambarproduk">
+                                    <label id="l_gamarp" for="gambarproduk_tbh">
                                       Select Image <br/>
                                       <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M38.65 15.3V11h-4.3V8h4.3V3.65h3V8H46v3h-4.35v4.3ZM4.7 44q-1.2 0-2.1-.9-.9-.9-.9-2.1V15.35q0-1.15.9-2.075.9-.925 2.1-.925h7.35L15.7 8h14v3H17.1l-3.65 4.35H4.7V41h34V20h3v21q0 1.2-.925 2.1-.925.9-2.075.9Zm17-7.3q3.6 0 6.05-2.45 2.45-2.45 2.45-6.1 0-3.6-2.45-6.025Q25.3 19.7 21.7 19.7q-3.65 0-6.075 2.425Q13.2 24.55 13.2 28.15q0 3.65 2.425 6.1Q18.05 36.7 21.7 36.7Zm0-3q-2.4 0-3.95-1.575-1.55-1.575-1.55-3.975 0-2.35 1.55-3.9 1.55-1.55 3.95-1.55 2.35 0 3.925 1.55 1.575 1.55 1.575 3.9 0 2.4-1.575 3.975Q24.05 33.7 21.7 33.7Zm0-5.5Z"/></svg>
-                                      <input id="gambarproduk" name="gambarproduk" type="file"/>
+                                      <input id="gambarproduk_tbh" name="gambarproduk_tbh" type="file"/>
                                       <br/>
                                       <span id="addphoto"></span>
                                     </label>
                                   </div>
                             <div id="userinput_tambah">
-                                <input type="text" id="namaproduk" name="namaproduk" placeholder="Nama Produk">
+                                <input type="text" id="namaproduk" name="namaproduk_tbh" placeholder="Nama Produk">
                             </div>
                             <div id="userinput_tambah">
-                                <input type="number" id="hargaproduk" name="hargaproduk" placeholder="Harga Produk">
+                                <input type="number" id="hargaproduk" name="hargaproduk_tbh" placeholder="Harga Produk">
                             </div>
                             <div id="userinput_tambah">
-                                <input type="number" id="stokproduk" name="stokproduk" placeholder="Stok Produk">
+                                <input type="number" id="stokproduk" name="stokproduk_tbh" placeholder="Stok Produk">
                             </div>
                               <script>
-                                  let input_add = document.getElementById("gambarproduk");
+                                  let input_add = document.getElementById("gambarproduk_tbh");
                                   let addphoto = document.getElementById("addphoto")
                             
                                   input_add.addEventListener("change", ()=>{
@@ -187,7 +198,7 @@
                                   })
                               </script>
                             <div id="actions">
-                                    <button type="submit" id="btn_benar" name="submit">Tambah Produk!</button>
+                                    <button type="submit" id="btn_benar" name="tabah_prd">Tambah Produk!</button>
                                 </div>
                             </form>
                             <a href="#"><button id="btn_salah">batal</button></a>
