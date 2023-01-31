@@ -44,14 +44,11 @@
             <div id="sidebar">
                 <div id="sidebar_in">
                  <div id="c_name_wrp">
-                    <a href="index.html"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
+                    <a href="#"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
                 </div>
                 <!-- sidebars menu -->
                 <div id="prd_wrp">
                     <a href="#"><h1>Produk</h1></a>
-                </div>
-                <div id="usr_wrp">
-                    <a href="user.html"><h1>User</h1></a>
                 </div>
                 <div id="l_out_wrp">
                     <a href="logout.php"><h3>Log out</h3></a>

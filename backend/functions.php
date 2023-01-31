@@ -1,7 +1,17 @@
 <?php
-    #connect to data base
+    #koneksi ke  data base
     $conn = mysqli_connect("localhost","root","","taraauto",);
-    #chek if the conect to the data base
+	#fungsi query 
+	function query($query) {
+		global $conn;
+		$result = mysqli_query($conn, $query);
+		$rows = [];
+		while( $row = mysqli_fetch_assoc($result) ) {
+			$rows[] = $row;
+		}
+		return $rows;
+	}
+    #chek ikoneksi ke  data base
     if(mysqli_error($conn)){
         echo "Koneksi Data base gagal";
     }
@@ -22,7 +32,7 @@
 				unlink($path. '/' . $file);
 			}
 		}
-    //menambahkan 
+    #menambahkan 
     function tambah ($data){
 	global $conn;
 	$namaproduk =  htmlspecialchars($data["namaproduk_tbh"]);
@@ -93,10 +103,22 @@
 		return $namaFileBaru;
 	}
     }
-	//hapus 
+	#hapus 
 	function hapus ($id) {
 		global $conn;
 		mysqli_query($conn, "DELETE FROM produk WHERE produk_id = $id");
 		return mysqli_affected_rows($conn);
 	}
+	#cari barang
+	function cari($keyword) {
+		$query = "SELECT * FROM produk
+					WHERE
+				  namaproduk LIKE '%$keyword%' OR
+				  stokproduk LIKE '%$keyword%' OR
+				  hargaproduk LIKE '%$keyword%' OR
+				  nama LIKE '%$keyword%'
+				";
+		return query($query);
+	}
+	
 ?>

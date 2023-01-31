@@ -1,9 +1,9 @@
 <?php   
     session_start();
-     #chek if user already login or not 
-    if( !isset($_SESSION["login"])  && $_SESSION["login"] == false){
-         header("Locations:  index.php");
-        exit();
+    #chek if user already login or not 
+    if(!isset($_SESSION["login"])){
+         header("Location:  login.php");
+        exit;
     }
     require "../backend/functions.php";
     #fungsi untuk menambahkan produk 
@@ -27,6 +27,10 @@
     }
     #fungsi untuk menampilkan produk dari database
     $produk = mysqli_query($conn,"SELECT * FROM produk ORDER BY namaproduk");
+    #fungsi untukmencari produk 
+    if( isset($_POST["cari"]) ) {
+        $produk = cari($_POST["keyword"]);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,10 +52,10 @@
                  <ol>
                     <li>
                         <div id="c_name_wrp">
-                            <a href="index.html"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
+                            <a href="index.php"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
                         </div>
                     </li>
-                    <li> 
+                    <li>
                         <a href="#conten_wrp" id="menu_bar">
                             <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M6 36v-3h36v3Zm0-10.5v-3h36v3ZM6 15v-3h36v3Z"/></svg>
                         </a>
@@ -60,7 +64,6 @@
                         </a>
                     </li>
                     <li id="tambah">
-                
                         <a href="#wrp_tbh"><button> <h2><span>+</span>Tambah</h2> </button></a>
                     </li>
                     <li>
@@ -74,14 +77,14 @@
             <div id="sidebar">
                 <div id="sidebar_in">
                  <div id="c_name_wrp">
-                    <a href="index.html"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
+                    <a href="index.php"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
                 </div>
                 <!-- sidebars menu -->
                 <div id="prd_wrp">
                     <a href="#"><h1>Produk</h1></a>
                 </div>
                 <div id="usr_wrp">
-                    <a href="user.html"><h1>User</h1></a>
+                    <a href="user.php"><h1>User</h1></a>
                 </div>
                 <div id="l_out_wrp">
                     <a href="logout.php" onclick="return confirm('Apakah Akan Logout');"><h3>Log out</h3></a>
@@ -139,7 +142,9 @@
                                  Last Edit By <?= $row["nama"]; ?>
                             </td>
                             <td>
-                                <a id="edit" href="#wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg></a>
+                                <a id="edit" href="#wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+                                    <path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg>
+                                </a>
                                 <a  id="hapus" href="hapus.php?id=<?= $row['produk_id']?>" 
                                     onclick="return confirm('Apakah Produk Akan Di Hapus');">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"/></svg>
