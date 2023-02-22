@@ -281,7 +281,7 @@
                                         <img src="img/<?php echo $_SESSION['gambarproduk']?>" width="150px">
                                     </div>
                                     <div id="userinput_tambah">
-                                        <input type="text" id="namaproduk" name="namaproduk" placeholder="<?php  echo $_SESSION['namaproduk'];?>">
+                                        <input type="text" id="namaproduk" name="namaproduk" placeholder="<?php  echo $_SESSION['namaproduk'];?>" value="<?php  echo $_SESSION['namaproduk'];?>">
                                     </div>
                                     <div id="userinput_tambah">
                                         <input type="number" id="hargaproduk" name="hargaproduk" placeholder="<?php echo $_SESSION['hargaproduk'];?>">

@@ -56,44 +56,43 @@
     }
     
     function upload() {
-	global $verfi;
-	$namaFile = $_FILES['gambarproduk']['name'];
-	$ukuranFile = $_FILES['gambarproduk']['size'];
-	$error = $_FILES['gambarproduk']['error'];
-	$tmpName = $_FILES['gambarproduk']['tmp_name'];
-	// di upload atau tidak
-	if ( $error === 4 ){
+		$namaFile = $_FILES['gambarproduk']['name'];
+		$ukuranFile = $_FILES['gambarproduk']['size'];
+		$error = $_FILES['gambarproduk']['error'];
+		$tmpName = $_FILES['gambarproduk']['tmp_name'];
+		// di upload atau tidak
+		if ( $error === 4 ){
 		echo"
 			<script>
 				alert('Gambar Tidak Bole Kosong');
 			</script>
 		";
 		return false;
-	}
-	
-	//hanya boleh upload gambar
-	$ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
-	
-	$ekstensiGambar = explode('.', $namaFile);
-	
-	$ekstensiGambar = strtolower(end($ekstensiGambar));
-	
-	if( !in_array($ekstensiGambar, $ekstensiGambarValid) ) {
+		}
+
+		//hanya boleh upload gambar
+		$ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+
+		$ekstensiGambar = explode('.', $namaFile);
+
+		$ekstensiGambar = strtolower(end($ekstensiGambar));
+
+		if( !in_array($ekstensiGambar, $ekstensiGambarValid) ) {
 		echo "<script>
 				alert('yang anda upload bukan gambar!');
 				document.location.href = 'index.php';
 			  </script>";
 		exit();
 		return false;
-	}
-	//jika ukuran gambar terlalubesar 
-	else if( $ukuranFile > 1000000 ) {
-		echo "<script>
-				alert('ukuran gambar terlalu besar!');
-			  </script>";
-		return false;
-		exit();
-	} else {
+		}
+		//jika ukuran gambar terlalubesar 
+		else if( $ukuranFile > 1000000 ) {
+			echo "<script>
+					alert('ukuran gambar terlalu besar!');
+				  </script>";
+			return false;
+			exit();
+		} else {
 		//lolos pengecekan gambar lolos di upload 
 		// generate nama gambar baru 
 		$namaFileBaru = uniqid();
@@ -101,7 +100,7 @@
 		$namaFileBaru .= $ekstensiGambar;
 		move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
 		return $namaFileBaru;
-	}
+		}
     }
 	#hapus 
 	function hapus ($id) {
@@ -182,18 +181,18 @@
 		$id = $data["produkid"];
 		$namaproduk =  ($data["namaproduk"]);
 		$stokproduk =  ($data["stokproduk"]);
-    	$hargaproduk = ($data["hargaproduk"]);
+	    $hargaproduk = ($data["hargaproduk"]);
 		$gambarLama = ($data["gambarLama"]);
 		$gambarproduk = isset ($data["gambarproduk"]);
 		$namauser =  $_SESSION['username'];
+		echo $id;
+		die();
 		//cek user memasukan gambar baru atau tidak
 		if ($_FILES["gambarproduk"]["error"] === 4) {
 			$gambarproduk = $gambarLama;
 		} else {
 			$gambarproduk = upload();
 		}
-
-
 		//memasukan data ke data base
 		$query = "UPDATE `produk` SET 
 		`nama` = '$namauser', 
@@ -205,5 +204,5 @@
 		mysqli_query($conn, $query);
 		return mysqli_affected_rows($conn);
 	}
-	
+
 ?>

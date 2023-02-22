@@ -345,7 +345,7 @@ table,tr {
     position: absolute;
     left: 30%;
     right: 50%;
-    top: 15%;
+    top: 10%;
 }
 #wrp_tbh:target  {
     position: absolute;
@@ -456,7 +456,7 @@ table,tr {
     #wrp_tbh:target #content{
         left: 17.5%;
         right: 50%;
-        top: 15%;
+        top: 5%;
     }
     #wrp_edit:target #content_o #content_ine{
         position: absolute;
