@@ -25,8 +25,14 @@
             ";
         }
     }
+    #paginations produk 
+    $jumlahDataPerHalaman = 2;
+    $jumlahData = count(query("SELECT * FROM produk"));
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+    $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
+    $awalData = ( $jumlahDataPerHalaman * $halamanAktif ) - $jumlahDataPerHalaman;
     #fungsi untuk menampilkan produk dari database
-    $produk = mysqli_query($conn,"SELECT * FROM produk ORDER BY namaproduk");
+    $produk = mysqli_query($conn,"SELECT * FROM produk LIMIT $awalData, $jumlahDataPerHalaman");
     #fungsi untukmencari produk 
     if( isset($_POST["cari"]) ) {
         $produk = cari($_POST["keyword"]);
@@ -34,9 +40,10 @@
     #fungsi untuk mengedit produk
     if ( isset($_POST["edit_prd"]) ){
         $id_e = $_POST["id_e"];
+        $_SESSION['id_prd'] = $id_e;
         $produk_e = mysqli_query($conn,"SELECT * FROM produk WHERE produk_id = $id_e");
         foreach ( $produk_e as $row_e ){
-
+            
             $_SESSION['namaproduk'] = $row_e['namaproduk'];
             $_SESSION['gambarproduk'] = $row_e['gambarproduk'];
             $_SESSION['stokproduk'] = $row_e['stokproduk'];
@@ -45,7 +52,27 @@
         }
         header("Location:  index.php?id=#wrp_edit");
     } 
-
+    if( isset($_POST["edit"]) ) {
+        // cek apakah data berhasil diubah atau tidak
+        if( ubah($_POST) > 0 ) {
+            echo "
+                <script>
+                    alert('Ubah Produk Berhasil');
+                    document.location.href = 'index.php';
+                </script>
+            ";  
+        } 
+        else {
+            echo "
+                <script>
+                    alert('Ubah Produk Gagal T-T');
+                    document.location.href = 'index.php';
+                </script>
+            ";
+        }
+    
+    
+    }
     
 ?>
 <!DOCTYPE html>
@@ -182,14 +209,21 @@
             </div>
             </div>
             <div id="paginations">
-                <p>
-                    <a href="#"> < </a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">...</a>
-                    <a href="#">5</a>
-                    <a href="#"> > </a>
-                </p>
+            <?php if( $halamanAktif > 1 ) : ?>
+	            <a href="?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+                <?php endif; ?>
+
+                <?php for( $i = 1; $i <= $jumlahHalaman; $i++ ) : ?>
+                	<?php if( $i == $halamanAktif ) : ?>
+                		<a href="?halaman=<?= $i; ?>" style="font-weight: bold; color: #000957;"><?= $i; ?></a>
+                	<?php else : ?>
+                		<a href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+                	<?php endif; ?>
+                <?php endfor; ?>
+                    
+                <?php if( $halamanAktif < $jumlahHalaman ) : ?>
+                	<a href="?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+            <?php endif; ?>
             </div>
             <!-- tambah produk -->
             <div id="wrp_tbh">
@@ -198,10 +232,10 @@
                             <form action="" method="post" id="form_tambah" enctype="multipart/form-data">
                                 <h1>Tambah Produk</h1>
                                 <div id="userinput_tambah_g">
-                                    <label id="l_gamarp" for="gambarproduk_tbh">
+                                    <label id="l_gamarp" for="gambarproduk">
                                       Select Image <br/>
                                       <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M38.65 15.3V11h-4.3V8h4.3V3.65h3V8H46v3h-4.35v4.3ZM4.7 44q-1.2 0-2.1-.9-.9-.9-.9-2.1V15.35q0-1.15.9-2.075.9-.925 2.1-.925h7.35L15.7 8h14v3H17.1l-3.65 4.35H4.7V41h34V20h3v21q0 1.2-.925 2.1-.925.9-2.075.9Zm17-7.3q3.6 0 6.05-2.45 2.45-2.45 2.45-6.1 0-3.6-2.45-6.025Q25.3 19.7 21.7 19.7q-3.65 0-6.075 2.425Q13.2 24.55 13.2 28.15q0 3.65 2.425 6.1Q18.05 36.7 21.7 36.7Zm0-3q-2.4 0-3.95-1.575-1.55-1.575-1.55-3.975 0-2.35 1.55-3.9 1.55-1.55 3.95-1.55 2.35 0 3.925 1.55 1.575 1.55 1.575 3.9 0 2.4-1.575 3.975Q24.05 33.7 21.7 33.7Zm0-5.5Z"/></svg>
-                                      <input id="gambarproduk_tbh" name="gambarproduk_tbh" type="file"/>
+                                      <input id="gambarproduk" name="gambarproduk" type="file"/>
                                       <br/>
                                       <span id="addphoto"></span>
                                     </label>
@@ -216,7 +250,7 @@
                                 <input type="number" id="stokproduk" name="stokproduk_tbh" placeholder="Stok Produk">
                             </div>
                               <script>
-                                  let input_add = document.getElementById("gambarproduk_tbh");
+                                  let input_add = document.getElementById("gambarproduk");
                                   let addphoto = document.getElementById("addphoto")
                             
                                   input_add.addEventListener("change", ()=>{
@@ -233,18 +267,16 @@
                         </div>
                     </div>
             </div>
+            <!-- edit produk -->
             <div id="wrp_edit">
                             <div id="content_o">
                                 <div id="content_ine">
-                                    <form action="post" id="form_tambah">
+                                    <form action="" method="post" id="form_tambah" enctype="multipart/form-data">
                                         <h1 id="judul">Edit Produk</h1>
-                                        <?php
-                                            global $nama_p_e;
-                                            global $gambar_p_e;
-                                            global $stok_p_e;
-                                            global $harga_p_e;
-                                            echo $nama_p_e , $gambar_p_e, $stok_p_e, $harga_p_e; 
-                                         ?>
+                                    <div id="thehiden">
+                                    <input type="hidden" name="produkid" value="<?php $_SESSION['id_prd'];?>">
+                                    <input type="hidden" name="gambarLama" value="<?php  $_SESSION['gambarproduk'];?>">
+                                    </div>
                                     <div id="gambar">
                                         <img src="img/<?php echo $_SESSION['gambarproduk']?>" width="150px">
                                     </div>
@@ -258,16 +290,16 @@
                                         <input type="number" id="stokproduk" name="stokproduk" placeholder="<?php echo $_SESSION['stokproduk'];?>">
                                     </div>
                                     <div id="userinput_tambah_g_e">
-                                        <label id="l_gambar" for="gambarproduk_e">
+                                        <label id="l_gambar" for="gambarproduk">
                                           Select Image <br/>
                                           <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M38.65 15.3V11h-4.3V8h4.3V3.65h3V8H46v3h-4.35v4.3ZM4.7 44q-1.2 0-2.1-.9-.9-.9-.9-2.1V15.35q0-1.15.9-2.075.9-.925 2.1-.925h7.35L15.7 8h14v3H17.1l-3.65 4.35H4.7V41h34V20h3v21q0 1.2-.925 2.1-.925.9-2.075.9Zm17-7.3q3.6 0 6.05-2.45 2.45-2.45 2.45-6.1 0-3.6-2.45-6.025Q25.3 19.7 21.7 19.7q-3.65 0-6.075 2.425Q13.2 24.55 13.2 28.15q0 3.65 2.425 6.1Q18.05 36.7 21.7 36.7Zm0-3q-2.4 0-3.95-1.575-1.55-1.575-1.55-3.975 0-2.35 1.55-3.9 1.55-1.55 3.95-1.55 2.35 0 3.925 1.55 1.575 1.55 1.575 3.9 0 2.4-1.575 3.975Q24.05 33.7 21.7 33.7Zm0-5.5Z"/></svg>
-                                          <input id="gambarproduk_e" name="gambarproduk_e" type="file"/>
+                                          <input id="gambarproduk" name="gambarproduk" type="file"/>
                                           <br/>
                                           <span id="addphoto_edit"></span>
                                         </label>
                                       </div>
                                       <script>
-                                             let input_edit = document.getElementById("gambarproduk_e");
+                                             let input_edit = document.getElementById("gambarproduk");
                                              let addphoto_edit = document.getElementById("addphoto_edit")
                             
                                              input_edit.addEventListener("change", ()=>{
@@ -276,7 +308,7 @@
                                               })
                                       </script>
                                            <div id="actions">
-                                            <button type="submit" id="btn_benar_e" name="submit">Tambah Produk!</button>
+                                            <button type="submit" id="btn_benar_e" name="edit">Edit Produk!</button>
                                         </div>
                                     </form>
                                     <a href="#"><button id="btn_salah_e">Batal</button></a>

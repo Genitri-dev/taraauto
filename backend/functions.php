@@ -57,10 +57,10 @@
     
     function upload() {
 	global $verfi;
-	$namaFile = $_FILES['gambarproduk_tbh']['name'];
-	$ukuranFile = $_FILES['gambarproduk_tbh']['size'];
-	$error = $_FILES['gambarproduk_tbh']['error'];
-	$tmpName = $_FILES['gambarproduk_tbh']['tmp_name'];
+	$namaFile = $_FILES['gambarproduk']['name'];
+	$ukuranFile = $_FILES['gambarproduk']['size'];
+	$error = $_FILES['gambarproduk']['error'];
+	$tmpName = $_FILES['gambarproduk']['tmp_name'];
 	// di upload atau tidak
 	if ( $error === 4 ){
 		echo"
@@ -176,4 +176,34 @@
 				";
 		return query($query);
 	}
+	//ubah informasi produk
+	function ubah ($data){
+		global $conn;
+		$id = $data["produkid"];
+		$namaproduk =  ($data["namaproduk"]);
+		$stokproduk =  ($data["stokproduk"]);
+    	$hargaproduk = ($data["hargaproduk"]);
+		$gambarLama = ($data["gambarLama"]);
+		$gambarproduk = isset ($data["gambarproduk"]);
+		$namauser =  $_SESSION['username'];
+		//cek user memasukan gambar baru atau tidak
+		if ($_FILES["gambarproduk"]["error"] === 4) {
+			$gambarproduk = $gambarLama;
+		} else {
+			$gambarproduk = upload();
+		}
+
+
+		//memasukan data ke data base
+		$query = "UPDATE `produk` SET 
+		`nama` = '$namauser', 
+		`namaproduk` = '$namaproduk', 
+		`stokproduk` = '$stokproduk', 
+		`gambarproduk` = '$gambarproduk', 
+		`hargaproduk` = '$hargaproduk'
+		 WHERE `produk`.`produkid` = $id ";
+		mysqli_query($conn, $query);
+		return mysqli_affected_rows($conn);
+	}
+	
 ?>
