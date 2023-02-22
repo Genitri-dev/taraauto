@@ -25,8 +25,14 @@
             ";
         }
     }
+    #paginations produk 
+    $jumlahDataPerHalaman = 2;
+    $jumlahData = count(query("SELECT * FROM produk"));
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+    $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
+    $awalData = ( $jumlahDataPerHalaman * $halamanAktif ) - $jumlahDataPerHalaman;
     #fungsi untuk menampilkan produk dari database
-    $produk = mysqli_query($conn,"SELECT * FROM produk ORDER BY namaproduk");
+    $produk = mysqli_query($conn,"SELECT * FROM produk LIMIT $awalData, $jumlahDataPerHalaman");
     #fungsi untukmencari produk 
     if( isset($_POST["cari"]) ) {
         $produk = cari($_POST["keyword"]);
@@ -182,14 +188,21 @@
             </div>
             </div>
             <div id="paginations">
-                <p>
-                    <a href="#"> < </a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">...</a>
-                    <a href="#">5</a>
-                    <a href="#"> > </a>
-                </p>
+                    <?php if( $halamanAktif > 1 ) : ?>
+	                    <a href="?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+                        <?php endif; ?>
+                    
+                        <?php for( $i = 1; $i <= $jumlahHalaman; $i++ ) : ?>
+                        	<?php if( $i == $halamanAktif ) : ?>
+                        		<a href="?halaman=<?= $i; ?>" style="font-weight: bold; color: #000957;"><?= $i; ?></a>
+                        	<?php else : ?>
+                        		<a href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+                        	<?php endif; ?>
+                        <?php endfor; ?>
+                            
+                        <?php if( $halamanAktif < $jumlahHalaman ) : ?>
+                        	<a href="?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+                    <?php endif; ?>
             </div>
             <!-- tambah produk -->
             <div id="wrp_tbh">
