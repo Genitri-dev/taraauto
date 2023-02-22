@@ -1,3 +1,37 @@
+<?php   
+    session_start();
+    #chek if user already login or not 
+    if(!isset($_SESSION["login"])){
+         header("Location:  login.php");
+        exit;
+    }
+    require "../backend/functions.php";
+    #fungsi untuk menambahkan produk 
+    if( isset($_POST["tabah_user"]) ){
+        //apakah data berhasil di masukan atau tidak
+        if( registrasi($_POST) > 0){
+            echo "
+                <script>
+                    alert('User Baru  Di Tambahkan');
+                    document.location.href = 'user.php';
+                </script>
+            ";
+        } else {
+            echo "
+                <script>
+                    alert('User  Gagal Di Tambahkan');
+                    document.location.href = 'user.php';
+                </script>
+            ";
+        }
+    }
+    #fungsi untuk menampilkan produk dari database
+    $user = mysqli_query($conn,"SELECT * FROM user ORDER BY username");
+    #fungsi untukmencari produk 
+    if( isset($_POST["cari"]) ) {
+        $user = cariuser($_POST["keyword"]);
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +93,7 @@
     </div>
             <div id="tbl_w_usr">
             <div id="table">
-                <table>
+                <table style="text-align: center;">
                     <tr>
                         <div id="tb_head">
                             <th>
@@ -74,118 +108,41 @@
                             <th>
                                 No Hp
                             </th>
-                            <th>
-                                Password
-                            </th>
-                            <th colspan="2">
-                                Update Terakhir
-                            </th>
                         </div>
                     </tr>
+                    <?php $i = 1; ?>
+                    <?php foreach( $user as $row ) : ?>
                     <tr>
                         <div id="tb_data">
-                        <td>
-                            001
+                        <td style="display : none">
+                            <?= $row["userid"]; ?>
                         </td>
                         <td>
-                             Admin
+                            <?= $i; ?> 
                         </td>
                         <td>
-                            Admin                        
+                            <?= $row["username"]; ?>
                         </td>
                         <td>
-                            085714989477
+                            <?= $row["nama"]; ?>
                         </td>
                         <td>
-                            *********
+                            <?= $row["userphone"]; ?>
                         </td>
                         <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
+                                <a id="edit" href="#conten_wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+                                    <path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg>
+                                </a>
+                                <a  id="hapus" href="hapus_user.php?id=<?= $row['userid']?>" 
+                                    onclick="return confirm('Apakah User Akan Di Hapus');">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"/></svg>
+                                </a>
+
+                            </td>
                         </div>
                     </tr>
-                    <tr>
-                        <div id="tb_data">
-                        <td>
-                            001
-                        </td>
-                        <td>
-                             Admin
-                        </td>
-                        <td>
-                            Admin                        
-                        </td>
-                        <td>
-                            085714989477
-                        </td>
-                        <td>
-                            *********
-                        </td>
-                        <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div id="tb_data">
-                        <td>
-                            001
-                        </td>
-                        <td>
-                             Admin
-                        </td>
-                        <td>
-                            Admin                        
-                        </td>
-                        <td>
-                            085714989477
-                        </td>
-                        <td>
-                            *********
-                        </td>
-                        <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
-                        </div>
-                    </tr>
-                    <tr>
-                        <div id="tb_data">
-                        <td>
-                            001
-                        </td>
-                        <td>
-                             Admin
-                        </td>
-                        <td>
-                            Admin                        
-                        </td>
-                        <td>
-                            085714989477
-                        </td>
-                        <td>
-                            *********
-                        </td>
-                        <td>
-                            Admin
-                        </td>
-                        <td>
-                            <a  id="edit" href="#conten_wrp_edit">Edit</a>
-                            <a  id="hapus" href="hapus.html">Hapus</a>
-                        </td>
-                        </div>
-                    </tr>
+                    <?php $i++; ?>
+	                <?php endforeach; ?>
                 </table>
             
             </div>
@@ -203,25 +160,25 @@
             <div id="wrp_ad_usr">
                 <div id="content_o">
                     <div id="content_ine">
-                        <form action="post" id="form_tambah">
+                        <form action="" method="post" id="form_tambah">
                             <h1>Tambah User</h1>
                         <div id="userinput_tambah">
-                            <input type="text" id="namauser" name="namauser" placeholder="Nama User">
+                            <input type="text" id="namauser" name="nama" placeholder="Nama User">
                         </div>
                         <div id="userinput_tambah">
                             <input type="text" id="username_ad_usr" name="username" placeholder="User Name">
                         </div>
                         <div id="userinput_tambah">
-                            <input type="number" id="nohandphone" name="nohandphone" placeholder="No HP">
+                            <input type="number" id="nohandphone" name="phone" placeholder="No HP">
                         </div>
                         <div id="userinput_tambah">
-                            <input type="text" id="password_ad_usr" name="namaproduk" placeholder="Password">
+                            <input type="text" id="password_ad_usr" name="password" placeholder="Password">
                         </div>
                         <div id="userinput_tambah">
-                            <input type="text" id="repassword_ad_usr" name="namaproduk" placeholder="Ulangi Password">
+                            <input type="text" id="repassword_ad_usr" name="password2" placeholder="Ulangi Password">
                         </div>
                         <div id="actions">
-                            <button type="submit" id="btn_benar" name="submit">Tambah User</button>
+                                    <button type="submit" id="btn_benar" name="tabah_user">Tambah User!</button>
                         </div>
                         </form>
                         <a href="#"><button id="btn_salah_e">Batal</button></a>

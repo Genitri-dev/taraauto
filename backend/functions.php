@@ -120,5 +120,60 @@
 				";
 		return query($query);
 	}
-	
+	#menambahkan user 
+	function registrasi($data){
+		#variable	
+	   	global $conn;
+		$username = $data["username"];
+	  	$name = $data["nama"];
+		$phone = $data["phone"];
+		$password = $data["password"];
+	   	$password2 =$data["password2"];
+		  #cek apakah username sudah terdaftar atau belum 
+			$result = mysqli_query($conn, "SELECT username FROM user WHERE username = '$username'");
+		  if( mysqli_fetch_assoc($result) ) {
+			  echo "<script>
+			  alert('username sudah terdaftar')
+			  </script>";
+			  return false;
+		  }
+		  // cek form sudah di isi atau belum
+		  if (empty($username && $password)){
+			  echo "<script>
+					  alert('username dan password harus di isi')
+					</script>";
+			  return false;
+		  } 
+		  // cek konfirmasi password
+	  
+		  if( $password !== $password2 ) {
+
+			  echo "<script>
+				alert('konfirmasi password tidak sesuai!');
+			  </script>";
+
+			return false;
+		  }
+		  // enkripsi password
+		  $password = password_hash($password, PASSWORD_DEFAULT);
+		  // tambahkan userbaru ke database
+		  mysqli_query($conn, "INSERT INTO `user` (`userid`, `username`, `nama`, `userphone`, `password`) VALUES (NULL, '{$username}', '{$name}', '{$phone}', '{$password}')");
+		  return mysqli_affected_rows($conn);
+	}
+	#hapus user 
+	function hapus_user($id) {
+		global $conn;
+		mysqli_query($conn, "DELETE FROM user WHERE userid = $id");
+		return mysqli_affected_rows($conn);
+	}
+	#cari user 
+	function cariuser($keyword) {
+		$query = "SELECT * FROM user
+					WHERE
+				  username LIKE '%$keyword%' OR
+				  nama LIKE '%$keyword%' OR
+				  userphone LIKE '%$keyword%'
+				";
+		return query($query);
+	}
 ?>

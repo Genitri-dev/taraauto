@@ -31,6 +31,22 @@
     if( isset($_POST["cari"]) ) {
         $produk = cari($_POST["keyword"]);
     }
+    #fungsi untuk mengedit produk
+    if ( isset($_POST["edit_prd"]) ){
+        $id_e = $_POST["id_e"];
+        $produk_e = mysqli_query($conn,"SELECT * FROM produk WHERE produk_id = $id_e");
+        foreach ( $produk_e as $row_e ){
+
+            $_SESSION['namaproduk'] = $row_e['namaproduk'];
+            $_SESSION['gambarproduk'] = $row_e['gambarproduk'];
+            $_SESSION['stokproduk'] = $row_e['stokproduk'];
+            $_SESSION['hargaproduk']= $row_e['hargaproduk'];
+
+        }
+        header("Location:  index.php?id=#wrp_edit");
+    } 
+
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,6 +134,7 @@
                     </tr>
                     <?php $i = 1; ?>
                     <?php foreach( $produk as $row ) : ?>
+                        <!-- edit produk -->
                         <tr>
                             <div id="tb_data">
                             <td style="display : none">
@@ -142,9 +159,14 @@
                                  Last Edit By <?= $row["nama"]; ?>
                             </td>
                             <td>
-                                <a id="edit" href="#wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
-                                    <path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg>
-                                </a>
+                                <form action="" method="post">
+                                    <input type="text" name="id_e" value="<?=$row["produk_id"]; ?>"style="display : none">
+                                    <button id="edit" type="submit" type="submit" id="btn_benar" name="edit_prd">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+                                            <path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/>
+                                        </svg>
+                                    </button>
+                                </form>
                                 <a  id="hapus" href="hapus.php?id=<?= $row['produk_id']?>" 
                                     onclick="return confirm('Apakah Produk Akan Di Hapus');">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"/></svg>
@@ -153,6 +175,7 @@
                             </td>
                             </div>
                         </tr>
+                        
                         <?php $i++; ?>
 	                <?php endforeach; ?>
                 </table>
@@ -210,23 +233,29 @@
                         </div>
                     </div>
             </div>
-            <!-- edit produk -->
             <div id="wrp_edit">
                             <div id="content_o">
                                 <div id="content_ine">
                                     <form action="post" id="form_tambah">
-                                        <h1>Edit Produk</h1>
+                                        <h1 id="judul">Edit Produk</h1>
+                                        <?php
+                                            global $nama_p_e;
+                                            global $gambar_p_e;
+                                            global $stok_p_e;
+                                            global $harga_p_e;
+                                            echo $nama_p_e , $gambar_p_e, $stok_p_e, $harga_p_e; 
+                                         ?>
                                     <div id="gambar">
-                                        <img src="../backend/img/olimobil.jpg" width="250px" alt="olimobil">
+                                        <img src="img/<?php echo $_SESSION['gambarproduk']?>" width="150px">
                                     </div>
                                     <div id="userinput_tambah">
-                                        <input type="text" id="namaproduk" name="namaproduk" placeholder="Nama Produk">
+                                        <input type="text" id="namaproduk" name="namaproduk" placeholder="<?php  echo $_SESSION['namaproduk'];?>">
                                     </div>
                                     <div id="userinput_tambah">
-                                        <input type="number" id="hargaproduk" name="hargaproduk" placeholder="Harga Produk">
+                                        <input type="number" id="hargaproduk" name="hargaproduk" placeholder="<?php echo $_SESSION['hargaproduk'];?>">
                                     </div>
                                     <div id="userinput_tambah">
-                                        <input type="number" id="stokproduk" name="stokproduk" placeholder="Stok Produk">
+                                        <input type="number" id="stokproduk" name="stokproduk" placeholder="<?php echo $_SESSION['stokproduk'];?>">
                                     </div>
                                     <div id="userinput_tambah_g_e">
                                         <label id="l_gambar" for="gambarproduk_e">
@@ -253,8 +282,8 @@
                                     <a href="#"><button id="btn_salah_e">Batal</button></a>
                                 </div>
                             </div>
+                           </div>
             </div>
-    </div>
 </body>
 </html>
     </div>
