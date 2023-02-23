@@ -25,9 +25,15 @@
             ";
         }
     }
-    #fungsi untuk menampilkan produk dari database
-    $user = mysqli_query($conn,"SELECT * FROM user ORDER BY username");
-    #fungsi untukmencari produk 
+    #fungsi untuk menampilkan user dari database
+    #pagi nations user
+    $jumlahDataPerHalaman = 3;
+    $jumlahData = count(query("SELECT * FROM user"));
+    $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+    $halamanAktif = ( isset($_GET["halaman"]) ) ? $_GET["halaman"] : 1;
+    $awalData = ( $jumlahDataPerHalaman * $halamanAktif ) - $jumlahDataPerHalaman;
+    $user = mysqli_query($conn,"SELECT * FROM user LIMIT $awalData, $jumlahDataPerHalaman");
+    #fungsi untukmencari user 
     if( isset($_POST["cari"]) ) {
         $user = cariuser($_POST["keyword"]);
     }
@@ -52,7 +58,7 @@
             <ol>
                <li>
                    <div id="c_name_wrp">
-                       <a href="index.html"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
+                       <a href="index.php"><h1 id="c_name_index"><span>TARA</span> AUTO</h1></a>
                    </div>
                </li>
                <li> 
@@ -130,9 +136,9 @@
                             <?= $row["userphone"]; ?>
                         </td>
                         <td>
-                                <a id="edit" href="#conten_wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
+                                <!-- <a id="edit" href="#conten_wrp_edit"><svg xmlns="http://www.w3.org/2000/svg" height="48" width="48">
                                     <path d="M21.35 42V30.75h3v4.15H42v3H24.35V42ZM6 37.9v-3h12.35v3Zm9.35-8.3v-4.1H6v-3h9.35v-4.2h3v11.3Zm6-4.1v-3H42v3Zm8.3-8.25V6h3v4.1H42v3h-9.35v4.15ZM6 13.1v-3h20.65v3Z"/></svg>
-                                </a>
+                                </a> -->
                                 <a  id="hapus" href="hapus_user.php?id=<?= $row['userid']?>" 
                                     onclick="return confirm('Apakah User Akan Di Hapus');">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="48" width="48"><path d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"/></svg>
@@ -148,14 +154,20 @@
             </div>
             </div>
             <div id="paginations_user">
-                <p>
-                    <a href="#"> < </a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">...</a>
-                    <a href="#">5</a>
-                    <a href="#"> > </a>
-                </p>
+            <?php if( $halamanAktif > 1 ) : ?>
+	            <a href="?halaman=<?= $halamanAktif - 1; ?>">&laquo;</a>
+                <?php endif; ?>
+
+                <?php for( $i = 1; $i <= $jumlahHalaman; $i++ ) : ?>
+                	<?php if( $i == $halamanAktif ) : ?>
+                		<a href="?halaman=<?= $i; ?>" style="font-weight: bold; color: #000957;"><?= $i; ?></a>
+                	<?php else : ?>
+                		<a href="?halaman=<?= $i; ?>"><?= $i; ?></a>
+                	<?php endif; ?>
+                <?php endfor; ?>
+                <?php if( $halamanAktif < $jumlahHalaman ) : ?>
+                	<a href="?halaman=<?= $halamanAktif + 1; ?>">&raquo;</a>
+            <?php endif; ?>
             </div>
             <div id="wrp_ad_usr">
                 <div id="content_o">
@@ -185,7 +197,7 @@
                     </div>
                 </div>
             </div>
-            <div id="conten_wrp_edit">
+            <!-- <div id="conten_wrp_edit">
                     <div id="wrp_ed_usr">
                             <div id="content_o">
                                 <div id="content_ine">
@@ -211,6 +223,6 @@
                                 </div>
                             </div>
                     </div>
-            </div>
+            </div> -->
 </body>
 </html>

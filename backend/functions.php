@@ -1,6 +1,20 @@
 <?php
     #koneksi ke  data base
     $conn = mysqli_connect("localhost","root","","taraauto",);
+	#menghapus gambar jika tidak di gunakan 
+	$path = '../frontend/img/';
+	//get lits of that folder use scandir
+	$files = scandir($path);
+	$files = array_diff($files, array('.','..'));
+	foreach ($files as $file) {
+		// Check if the file is in the database
+		$sql = "SELECT * FROM produk WHERE gambarproduk = '$file'";
+		$result = mysqli_query($conn, $sql);
+		if (mysqli_num_rows($result) == 0) {
+			// The file is not in the database - delete it from the folder
+			unlink($path. '/' . $file);
+		}
+	}
 	#fungsi query 
 	function query($query) {
 		global $conn;
@@ -12,12 +26,12 @@
 		return $rows;
 	}
     #chek ikoneksi ke  data base
-    if(mysqli_error($conn)){
-        echo "Koneksi Data base gagal";
-    }
-    else {
-        echo "Koneksi Database Berhasil";
-    }
+    #if(mysqli_error($conn)){
+    #    echo "Koneksi Data base gagal";
+    #}
+    #else {
+    #    echo "Koneksi Database Berhasil";
+    #}
 		//to delete file if its not use in database
 		$path = '../frontend/img/';
 		//get lits of that folder use scandir
@@ -176,6 +190,7 @@
 		return query($query);
 	}
 	//ubah informasi produk
+//ubah informasi produk
 	function ubah ($data){
 		global $conn;
 		$id = $data["produkid"];
@@ -183,16 +198,16 @@
 		$stokproduk =  ($data["stokproduk"]);
 	    $hargaproduk = ($data["hargaproduk"]);
 		$gambarLama = ($data["gambarLama"]);
-		$gambarproduk = isset ($data["gambarproduk"]);
+		#$gambarproduk = ($data["gambarproduk"]);
 		$namauser =  $_SESSION['username'];
-		echo $id;
-		die();
-		//cek user memasukan gambar baru atau tidak
 		if ($_FILES["gambarproduk"]["error"] === 4) {
 			$gambarproduk = $gambarLama;
 		} else {
 			$gambarproduk = upload();
 		}
+
+		#echo $id , $namaproduk , $stokproduk , $hargaproduk , $gambarproduk , $namauser;
+		#die();
 		//memasukan data ke data base
 		$query = "UPDATE `produk` SET 
 		`nama` = '$namauser', 
@@ -200,9 +215,8 @@
 		`stokproduk` = '$stokproduk', 
 		`gambarproduk` = '$gambarproduk', 
 		`hargaproduk` = '$hargaproduk'
-		 WHERE `produk`.`produkid` = $id ";
+		 WHERE `produk`.`produk_id` = $id ";
 		mysqli_query($conn, $query);
 		return mysqli_affected_rows($conn);
 	}
-
 ?>
