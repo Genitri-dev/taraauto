@@ -25,6 +25,12 @@
 		}
 		return $rows;
 	}
+	#format number ke curency
+	function rupiah($angka){
+		$hasil_rupiah = "Rp " . number_format($angka,2,',','.');
+		return $hasil_rupiah;
+	 
+	}
     #chek ikoneksi ke  data base
     #if(mysqli_error($conn)){
     #    echo "Koneksi Data base gagal";

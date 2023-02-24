@@ -177,7 +177,7 @@
                                   <?= $row["stokproduk"]; ?>
                             </td>
                             <td>
-                                  <?= $row["hargaproduk"]; ?>
+                                  <?=   rupiah($row["hargaproduk"]) ?>
                             </td>
                             <td>
                                  Last Edit By <?= $row["nama"]; ?>
@@ -250,7 +250,7 @@
                                 
                                       addphoto.innerText = inputImage.name;
                                   })
-                              </script> -->
+                              </> -->
                             <div id="actions">
                                     <button type="submit" id="btn_benar" name="tabah_prd">Tambah Produk!</button>
                                 </div>
